@@ -20,6 +20,7 @@ public class Main extends Application {
         mainWindow = new MainWindow();
         mainWindow.init();
         Scene scene = new Scene(mainWindow);
+        primaryStage.setTitle("Smarter Monitor");
         primaryStage.setScene(scene);
         primaryStage.show();
 
