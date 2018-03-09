@@ -69,7 +69,7 @@ public class MainWindow extends Pane {
              "ownergrp": "root"
              }]
              }
-             * 
+             *
              *
              * TODO:Implement here
              * Step:
@@ -77,6 +77,7 @@ public class MainWindow extends Pane {
              * 2.the data will be json formatted string,so parse it
              * 3.add the data to layout
              */
+
         }
     }
 
