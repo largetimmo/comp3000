@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class MainWindow extends Pane {
+    Thread update;
 
     public MainWindow(){
 
@@ -26,6 +27,24 @@ public class MainWindow extends Pane {
         catch (IOException e){
             e.printStackTrace();
         }
+
     }
+    class DoInBackgroud extends Thread{
+        private float updatef = 1.0f;
+        public void setUpdatef(float f){
+            updatef = f;
+        }
+        @Override
+        public void run(){
+            /**
+             * TODO:Implement here
+             * Step:
+             * 1.get data from SystemController
+             * 2.the data will be json formatted string,so parse it
+             * 3.add the data to layout
+             */
+        }
+    }
+
 
 }
