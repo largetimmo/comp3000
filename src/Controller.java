@@ -1,13 +1,8 @@
 
-public class Controller{
-    private view.MainWindow mainWindow;
+public class Controller extends Thread{
 
-
-    private void Create(){
-
-    }
-
+    @Override
     public void run(){
-
+        //p
     }
 }
