@@ -37,6 +37,27 @@ public class MainWindow extends Pane {
         @Override
         public void run(){
             /**
+             *
+             * JSON format example
+             * {
+             "result": [{
+             "cpu": 5.66,
+             "memory": "3.22GB",
+             "name": "chrome",
+             "pid": 1234,
+             "owner": "root",
+             "ownergrp": "root"
+             }, {
+             "cpu": 45.66,
+             "memory": "32.22GB",
+             "name": "chrome",
+             "pid": 12343,
+             "owner": "root",
+             "ownergrp": "root"
+             }]
+             }
+             * 
+             *
              * TODO:Implement here
              * Step:
              * 1.get data from SystemController
