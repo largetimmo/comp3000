@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainWindow">
     <children>
         <HBox layoutX="595.0" layoutY="430.0" />
-        <TableView fx:id="processTable" layoutX="48.0" layoutY="26.0" prefHeight="369.0" prefWidth="590.0">
+        <TableView fx:id="processTable" layoutX="22.0" layoutY="26.0" prefHeight="369.0" prefWidth="647.0">
             <columns>
                 <TableColumn fx:id="pName" prefWidth="118.0" text="Process Name" />
                 <TableColumn fx:id="pID" prefWidth="92.0" text="Process ID" />
