@@ -85,6 +85,9 @@ public class Main extends Application {
             String JSONStr;
             SystemController DATA = new SystemController();
             JSONStr = DATA.getallprocesses_test();
+            JSONStr = JSONStr.substring(10,JSONStr.length()-1);
+            //System.out.println("Test");
+            //System.out.println(JSONStr);
             JSONArray jsonArray = JSONArray.fromObject(JSONStr);
 
             Object[] os = jsonArray.toArray();
