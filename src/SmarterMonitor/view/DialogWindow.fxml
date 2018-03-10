@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DialogWindow">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SmarterMonitor.view.DialogWindow">
    <children>
       <Button fx:id="killButton" layoutX="79.0" layoutY="160.0" mnemonicParsing="false" onAction="#killProcess" prefHeight="27.0" prefWidth="68.0" text="Kill It" />
       <Button fx:id="keepButton" layoutX="211.0" layoutY="160.0" mnemonicParsing="false" onAction="#keepProcess" prefHeight="27.0" prefWidth="68.0" text="Keep It" />
