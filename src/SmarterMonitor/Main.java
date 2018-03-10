@@ -1,6 +1,5 @@
-package view;
-
-import controller.SystemController;
+package SmarterMonitor;
+import SmarterMonitor.controller.SystemController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,23 +10,27 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import SmarterMonitor.view.MainWindow;
+import SmarterMonitor.view.Process;
 
 import java.io.IOException;
 
 public class Main extends Application {
 
-    //private MainWindow mainWindow;
+    private MainWindow mainWindow;
+
     private Stage primaryStage;
     private BorderPane rootLayout;
     Thread update;
     private ObservableList<Process> processData = FXCollections.observableArrayList();
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //mainWindow = new MainWindow();
+        mainWindow = new MainWindow();
         //mainWindow.init();
         this.primaryStage = primaryStage;
 
         this.primaryStage.setTitle("Smarter Monitor");
+        this.primaryStage.show();
         initRootLayout();
         setMainWindow();
 
@@ -37,7 +40,7 @@ public class Main extends Application {
     public void initRootLayout(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("RootLayout.fxml"));
+            loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             //Show the scene
@@ -55,7 +58,7 @@ public class Main extends Application {
         try{
             //Load MainWindow
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("MainWindow.fxml"));
+            loader.setLocation(Main.class.getResource("view/MainWindow.fxml"));
             AnchorPane mainWindow = (AnchorPane) loader.load();
             //Set into the center of rootLayout
             rootLayout.setCenter(mainWindow);

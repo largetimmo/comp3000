@@ -1,4 +1,4 @@
-package controller;
+package SmarterMonitor.controller;
 
 public class Controller extends Thread{
 

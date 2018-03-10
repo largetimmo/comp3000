@@ -1,27 +1,27 @@
-package view;
+package SmarterMonitor.view;
 
 import javafx.beans.property.*;
 
 public class Process {
-    private final StringProperty pname;
+    private final StringProperty name;
     private final IntegerProperty pid;
-    private final StringProperty test;
+    private final StringProperty onwer;
     private final StringProperty memory;
     private final FloatProperty cpu;
 
-    public Process(String pName, int pID, String ownerInfo, String memory, float cpu){
-        this.pname = new SimpleStringProperty(pName);
+    public Process(String name, int pID, String ownerInfo, String memory, float cpu){
+        this.name = new SimpleStringProperty(name);
         this.pid = new SimpleIntegerProperty(pID);
-        this.test = new SimpleStringProperty(ownerInfo);
+        this.onwer = new SimpleStringProperty(ownerInfo);
         this.memory = new SimpleStringProperty(memory);
         this.cpu = new SimpleFloatProperty(cpu);
     }
 
-    public void setpName(String Name){
-        pname.set(Name);
+    public void setpName(String pName){
+        name.set(pName);
     }
     public String getpName(){
-        return pname.get();
+        return name.get();
     }
     public void setpID(int id){
         pid.set(id);
@@ -30,10 +30,10 @@ public class Process {
         return pid.get();
     }
     public void setOwnerInfo(String owner){
-        test.set(owner);
+        onwer.set(owner);
     }
     public String getonwerInfo(){
-        return test.get();
+        return onwer.get();
     }
     public void setMemory(String memo){
         memory.set(memo);
@@ -46,5 +46,17 @@ public class Process {
     }
     public float getCpu(){
         return cpu.get();
+    }
+
+    public IntegerProperty pidProperty() {
+        return pid;
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public StringProperty ownerProperty() {
+        return onwer;
     }
 }

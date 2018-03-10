@@ -1,4 +1,4 @@
-package view;
+package SmarterMonitor.view;
 
 
 import javafx.fxml.FXML;
@@ -13,26 +13,26 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sun.applet.Main;
+import SmarterMonitor.Main;
 
 
 import java.io.IOException;
 
 
 public class MainWindow extends Pane {
-    private view.Main main;
-    Thread update;
+    private Main main;
+//    Thread update;
 //    class Process{
-//        private final SimpleStringProperty pName;
-//        private final SimpleStringProperty pID;
-//        private final SimpleStringProperty ownerInfo;
+//        private final StringProperty pName;
+//        private final IntegerProperty pID;
+//        private final StringProperty ownerInfo;
 //
 //        private final StringProperty memory;
 //        private final FloatProperty cpu;
 //
-//        public Process(String pName, String pID, String ownerInfo, String memory, float cpu){
+//        public Process(String pName, int pID, String ownerInfo, String memory, float cpu){
 //            this.pName = new SimpleStringProperty(pName);
-//            this.pID = new SimpleStringProperty(pID);
+//            this.pID = new SimpleIntegerProperty(pID);
 //            this.ownerInfo = new SimpleStringProperty(ownerInfo);
 //            this.memory = new SimpleStringProperty(memory);
 //            this.cpu = new SimpleFloatProperty(cpu);
@@ -44,10 +44,10 @@ public class MainWindow extends Pane {
 //        public String getpName(){
 //            return pName.get();
 //        }
-//        public void setpID(String id){
+//        public void setpID(int id){
 //            pID.set(id);
 //        }
-//        public String getpID(){
+//        public Integer getpID(){
 //            return pID.get();
 //        }
 //        public void setOwnerInfo(String owner){
@@ -78,7 +78,7 @@ public class MainWindow extends Pane {
     @FXML
     private TableColumn<Process, String> pName;
     @FXML
-    private TableColumn<Process, Integer> pID;
+    private TableColumn<Process, String> pID;
     @FXML
     private TableColumn<Process, String> uGroup;
     @FXML
@@ -90,7 +90,7 @@ public class MainWindow extends Pane {
 
     }
 
-    public void init(){
+//    public void init(){
 //        try {
 //            FXMLLoader loader = new FXMLLoader();
 //            loader.setLocation(getClass().getResource("RootLayout.fxml"));
@@ -111,19 +111,19 @@ public class MainWindow extends Pane {
 //        catch (IOException e){
 //            e.printStackTrace();
 //        }
-
-    }
+//
+//    }
 
     @FXML
     private void initialize(){
-        pName.setCellValueFactory(new PropertyValueFactory<Process, String>("pname"));
-        pID.setCellValueFactory(new PropertyValueFactory<Process, Integer>("pid"));
-        uGroup.setCellValueFactory(new PropertyValueFactory<Process,String>("test"));
+        pName.setCellValueFactory(new PropertyValueFactory<Process,String>("name"));
+        pID.setCellValueFactory(new PropertyValueFactory<Process,String>("pid"));
+        uGroup.setCellValueFactory(new PropertyValueFactory<Process,String >("owner"));
         memory.setCellValueFactory(new PropertyValueFactory<Process, String>("memory"));
         cpu.setCellValueFactory(new PropertyValueFactory<Process,Float>("cpu"));
     }
 
-    public void setMain(view.Main main){
+    public void setMain(SmarterMonitor.Main main){
         this.main = main;
         //System.out.println(main.getProcessData().get(0).getpName());
         processTable.setItems(main.getProcessData());
@@ -213,7 +213,7 @@ public class MainWindow extends Pane {
 //            Object[] os = jsonArray.toArray();
 //            for (int i = 0; i < os.length; i++) {
 //                JSONObject jsonObject = JSONObject.fromObject(os[i]);
-//                processData.add(new Process(jsonObject.get("name").toString(), jsonObject.get("pid").toString(), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
+//                processData.add(new Process(jsonObject.get("name").toString(), Integer.parseInt(jsonObject.get("pid").toString()), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
 //                System.out.println("Testing--------------------");
 //                System.out.println("Name: " + jsonObject.get("name"));
 //                System.out.println("pid: " + jsonObject.get("pid"));
@@ -223,7 +223,7 @@ public class MainWindow extends Pane {
 //                System.out.println("ObList: "+processData.get(i).getpName());
 //            }
 //
-//            //processTable.setItems(processData);
+//            processTable.setItems(processData);
 //        }
 //    }
 

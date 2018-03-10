@@ -1,4 +1,4 @@
-package view;
+package SmarterMonitor.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
