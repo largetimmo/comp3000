@@ -86,22 +86,30 @@ public class Main extends Application {
             SystemController DATA = new SystemController();
             JSONStr = DATA.getallprocesses_test();
             JSONStr = JSONStr.substring(10,JSONStr.length()-1);
+            JSONStr = JSONStr.replaceAll("\u0001\u0006","Null");
             //System.out.println("Test");
             //System.out.println(JSONStr);
             JSONArray jsonArray = JSONArray.fromObject(JSONStr);
-
             Object[] os = jsonArray.toArray();
+            int num=-1;  //Check how many process in the Computer
             for (int i = 0; i < os.length; i++) {
                 JSONObject jsonObject = JSONObject.fromObject(os[i]);
-                processData.add(new Process(jsonObject.get("name").toString(), Integer.parseInt(jsonObject.get("pid").toString()), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
-                //processData.add(new Process(jsonObject.get("name").toString(), jsonObject.get("pid").toString(), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
-                System.out.println("Testing--------------------");
-                System.out.println("Name: " + jsonObject.get("name"));
-                System.out.println("pid: " + jsonObject.get("pid"));
-                System.out.println("ownerInfo: " + jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString());
-                System.out.println("Memory: " + jsonObject.get("memory"));
-                System.out.println("cpu: " + jsonObject.get("cpu"));
-                System.out.println("ObList: " + processData.get(i).getpName());
+                String checkMemory = jsonObject.get("memory").toString();
+                if (!checkMemory.equals(" Null ")){
+                    processData.add(new Process(jsonObject.get("name").toString(), Integer.parseInt(jsonObject.get("pid").toString()), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
+                    num++;
+                    System.out.println("Testing--------------------");
+                    System.out.println("Name: " + jsonObject.get("name"));
+                    System.out.println("pid: " + jsonObject.get("pid"));
+                    System.out.println("ownerInfo: " + jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString());
+                    System.out.println("Memory: " + jsonObject.get("memory"));
+                    System.out.println("cpu: " + jsonObject.get("cpu"));
+                    System.out.println("ObList: " + processData.get(num).getpName());
+                }
+                else {
+                    continue;
+                }
+
             }
         }
     }
