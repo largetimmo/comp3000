@@ -121,6 +121,7 @@ public class MainWindow extends Pane {
         uGroup.setCellValueFactory(new PropertyValueFactory<Process,String >("owner"));
         memory.setCellValueFactory(new PropertyValueFactory<Process, String>("memory"));
         cpu.setCellValueFactory(new PropertyValueFactory<Process,Float>("cpu"));
+
     }
 
     public void setMain(SmarterMonitor.Main main){
@@ -146,13 +147,18 @@ public class MainWindow extends Pane {
             dialogStage.setScene(scene);
             DialogWindow dialogWindow = loader.getController();
             dialogWindow.setDialogStage(dialogStage);
-            dialogWindow.setProcessName("Process Name");
+            dialogWindow.setProcessName(processTable.getSelectionModel().getSelectedItem().getpName());
+            dialogWindow.setMainWindow(this);
             dialogStage.showAndWait();
         }
         catch (IOException e){
             e.printStackTrace();
         }
 
+    }
+
+    public int getSelectionPID(){
+        return processTable.getSelectionModel().getSelectedItem().getpID();
     }
 
 //    class DoInBackgroud extends Thread{

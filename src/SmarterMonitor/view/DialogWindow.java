@@ -24,6 +24,7 @@ public class DialogWindow extends Pane{
 
     private Stage dialogStage;
     private String processName;
+    private MainWindow mainWindow;
 
     public DialogWindow(){
 
@@ -36,6 +37,10 @@ public class DialogWindow extends Pane{
     public void setProcessName (String processName){
         this.processName = processName;
         textAlret.setText(processName + " need be killed");
+    }
+
+    public void setMainWindow(MainWindow mainWindow){
+        this.mainWindow = mainWindow;
     }
 
 
@@ -53,6 +58,9 @@ public class DialogWindow extends Pane{
     @FXML
     private void killProcess(){
         //TODO kill the process
+        int pid;
+        pid = mainWindow.getSelectionPID();
+        //System.out.println(pid);
         dialogStage.close();
     }
 
