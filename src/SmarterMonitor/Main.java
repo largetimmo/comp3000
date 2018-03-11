@@ -67,6 +67,7 @@ public class Main extends Application {
 
             MainWindow controller = loader.getController();
             controller.setMain(this);
+            controller.setFilter(this);
         }
         catch (IOException e){
             e.printStackTrace();
