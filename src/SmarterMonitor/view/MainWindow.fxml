@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SmarterMonitor.view.MainWindow">
     <children>
         <HBox layoutX="595.0" layoutY="430.0" />
-        <TableView fx:id="processTable" layoutX="22.0" layoutY="26.0" prefHeight="369.0" prefWidth="647.0">
+        <TableView fx:id="processTable" layoutX="22.0" layoutY="68.0" prefHeight="369.0" prefWidth="647.0">
             <columns>
                 <TableColumn fx:id="pName" prefWidth="118.0" text="Process Name" />
                 <TableColumn fx:id="pID" prefWidth="92.0" text="Process ID" />
@@ -20,6 +20,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <Button fx:id="killButton" layoutX="594.0" layoutY="417.0" mnemonicParsing="false" onAction="#killProcess" prefHeight="27.0" prefWidth="68.0" text="Kill" />
+        <Button fx:id="killButton" layoutX="22.0" layoutY="20.0" mnemonicParsing="false" onAction="#killProcess" prefHeight="16.0" prefWidth="68.0" text="Kill" />
+      <TextField fx:id="searchField" layoutX="502.0" layoutY="20.0" promptText="Searching" />
     </children>
 </AnchorPane>

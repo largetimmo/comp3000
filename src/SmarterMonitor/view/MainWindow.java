@@ -1,11 +1,16 @@
 package SmarterMonitor.view;
 
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -14,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import SmarterMonitor.Main;
+import org.apache.commons.lang.ObjectUtils;
 
 
 import java.io.IOException;
@@ -85,6 +91,8 @@ public class MainWindow extends Pane {
     private TableColumn<Process, String> memory;
     @FXML
     private TableColumn<Process, Float> cpu;
+    @FXML
+    private TextField searchField;
 
     public MainWindow(){
 
@@ -121,7 +129,12 @@ public class MainWindow extends Pane {
         uGroup.setCellValueFactory(new PropertyValueFactory<Process,String >("owner"));
         memory.setCellValueFactory(new PropertyValueFactory<Process, String>("memory"));
         cpu.setCellValueFactory(new PropertyValueFactory<Process,Float>("cpu"));
+
+
+
     }
+
+
 
     public void setMain(SmarterMonitor.Main main){
         this.main = main;
@@ -129,30 +142,59 @@ public class MainWindow extends Pane {
         processTable.setItems(main.getProcessData());
     }
 
+    public void setFilter(SmarterMonitor.Main main){
+        FilteredList<Process> filteredData = new FilteredList<>(main.getProcessData(), p->true);
 
+        searchField.textProperty().addListener((ovservable, oldValue, newValue) -> {
+            filteredData.setPredicate(process -> {
+                if (newValue == null || newValue.isEmpty()){
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (process.getpName().toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        SortedList<Process> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(processTable.comparatorProperty());
+
+        processTable.setItems(sortedData);
+    }
 
 
 
     @FXML
-    private void killProcess(){
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("DialogWindow.fxml"));
-            AnchorPane dialog = (AnchorPane)loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Kll Process");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(dialog);
-            dialogStage.setScene(scene);
-            DialogWindow dialogWindow = loader.getController();
-            dialogWindow.setDialogStage(dialogStage);
-            dialogWindow.setProcessName("Process Name");
-            dialogStage.showAndWait();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+    private void killProcess() {
+        //processTable.getSelectionModel().getSelectedItem();
+        if (processTable.getSelectionModel().getSelectedItem() != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("DialogWindow.fxml"));
+                AnchorPane dialog = (AnchorPane) loader.load();
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Kll Process");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                Scene scene = new Scene(dialog);
+                dialogStage.setScene(scene);
+                DialogWindow dialogWindow = loader.getController();
+                dialogWindow.setDialogStage(dialogStage);
+                dialogWindow.setProcessName(processTable.getSelectionModel().getSelectedItem().getpName());
+                dialogWindow.setMainWindow(this);
+                dialogStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+        }
+    }
+
+    public int getSelectionPID(){
+        return processTable.getSelectionModel().getSelectedItem().getpID();
     }
 
 //    class DoInBackgroud extends Thread{
