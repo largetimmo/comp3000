@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SmarterMonitor.view.DialogWindow">
    <children>
-      <Button fx:id="killButton" layoutX="79.0" layoutY="160.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="68.0" text="Kill It" />
-      <Button fx:id="keepButton" layoutX="211.0" layoutY="160.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="68.0" text="Keep It" />
+      <Button fx:id="killButton" layoutX="79.0" layoutY="160.0" mnemonicParsing="false" onAction="#killProcess" prefHeight="27.0" prefWidth="68.0" text="Kill It" />
+      <Button fx:id="keepButton" layoutX="211.0" layoutY="160.0" mnemonicParsing="false" onAction="#keepProcess" prefHeight="27.0" prefWidth="68.0" text="Keep It" />
       <Text fx:id="textAlret" layoutX="101.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="XXX need be killed" textAlignment="CENTER" wrappingWidth="155.21875" />
       <ImageView fitHeight="102.0" fitWidth="155.0" layoutX="101.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>
