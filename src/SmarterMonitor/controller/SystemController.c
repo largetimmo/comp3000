@@ -86,13 +86,6 @@ void parseToJson(proc* procarr[], int procsize, char jsonstr[]){
 }
 
 
-
-void delete(proc* procarr[], int size){
-    for(int i =0; i<size;i++){
-        free(procarr[i]);
-    }
-}
-
 void getAllDir(char** namearr,int* size){
     (*size) = 0;
     DIR* dirp;
@@ -212,7 +205,6 @@ void readAll(unsigned int waitsec, long waitusec, char* msg){
 
     usleep(waitusec);
     sleep(waitsec);
-    //todo:change to user defined updatef;
     for (i = 0; i< size; i++){
 
         char filepath[MAX_STRING_SIZE];
@@ -244,8 +236,6 @@ void readAll(unsigned int waitsec, long waitusec, char* msg){
     }
     free(namearr);
     parseToJson(allprocs_now, size, msg);
-    delete(allprocs_prev,size);
-    delete(allprocs_prev,size);
 
 }
 
