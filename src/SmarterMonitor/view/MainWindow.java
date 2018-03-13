@@ -136,11 +136,11 @@ public class MainWindow extends Pane {
 
 
 
-    public void setMain(SmarterMonitor.Main main){
-        this.main = main;
-        //System.out.println(main.getProcessData().get(0).getpName());
-        processTable.setItems(main.getProcessData());
-    }
+//    public void setMain(SmarterMonitor.Main main){
+//        this.main = main;
+//        //System.out.println(main.getProcessData().get(0).getpName());
+//        processTable.setItems(main.getProcessData());
+//    }
 
     public void setFilter(SmarterMonitor.Main main){
         FilteredList<Process> filteredData = new FilteredList<>(main.getProcessData(), p->true);
@@ -196,6 +196,9 @@ public class MainWindow extends Pane {
     public int getSelectionPID(){
         return processTable.getSelectionModel().getSelectedItem().getpID();
     }
+
+
+
 
 //    class DoInBackgroud extends Thread{
 //        private float updatef = 1.0f;
