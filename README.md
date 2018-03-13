@@ -3,7 +3,7 @@
 
 # Environment Configuration 
 
-$ sudo apt install openjdk-8-jdk openjfx \
+$ sudo apt install openjdk-8-jdk openjfx
 
 
 # C library compile command
