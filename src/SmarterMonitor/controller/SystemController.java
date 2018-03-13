@@ -1,8 +1,12 @@
 package SmarterMonitor.controller;
 
+import javax.print.attribute.standard.NumberUp;
+
 public class SystemController {
     static {
         //todo
+        //change the null to your lib path
+        //MUST USE EXACT PATH
         //System.load(null);
     }
     public static native int killProcess(int pid);
