@@ -257,7 +257,7 @@ int main(int argc, const char * argv[]) {
 
 
 JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getallprocesses(JNIEnv * env, jclass cls){
-    char* message = malloc(302400);
+    char* message = malloc(51200);
     readAll(1,0,message);
     return (*env)->NewStringUTF(env,message);
 
