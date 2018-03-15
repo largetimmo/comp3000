@@ -3,6 +3,7 @@ package SmarterMonitor.view;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -136,11 +137,11 @@ public class MainWindow extends Pane {
 
 
 
-//    public void setMain(SmarterMonitor.Main main){
-//        this.main = main;
-//        //System.out.println(main.getProcessData().get(0).getpName());
-//        processTable.setItems(main.getProcessData());
-//    }
+    public void setMain(SmarterMonitor.Main main){
+        this.main = main;
+        //System.out.println(main.getProcessData().get(0).getpName());
+        processTable.setItems(main.getProcessData());
+    }
 
     public void setFilter(SmarterMonitor.Main main){
         FilteredList<Process> filteredData = new FilteredList<>(main.getProcessData(), p->true);

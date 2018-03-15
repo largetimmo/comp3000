@@ -34,10 +34,10 @@ public class SetDialog {
     @FXML
     private void initialize() {
     }
-    //@FXML
-//    private void getRate(){
-//        main.setRate(Integer.parseInt(rateSecond.getText().trim().toString()),main.getNewTimer());
-//        setStage.close();
-//    }
+    @FXML
+    private void getRate(){
+        main.setRate(Integer.parseInt(rateSecond.getText().trim().toString()),main.getNewTimer());
+        setStage.close();
+    }
 
 }

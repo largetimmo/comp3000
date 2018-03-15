@@ -22,7 +22,7 @@ import java.util.TimerTask;
 public class Main extends Application {
 
     private MainWindow mainWindow;
-    private int rate=5000;
+    private int rate=3000;
     Timer mTimer = new Timer();
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -82,22 +82,24 @@ public class Main extends Application {
         }
     }
 
-//    public void setRate(int second,Timer mTimer){
-//        rate = second*1000;
-//        mTimer.cancel();
-//        mTimer = new Timer();
-//        update = new DoInBackgroud();
-//        mTimer.schedule(update,1,rate);
-//    }
+    public void setRate(int second,Timer mTimer){
+        rate = second*1000;
+        mTimer.cancel();
+        mTimer.purge();
+        update.cancel();
+        mTimer = new Timer();
+        update = new DoInBackgroud();
+        mTimer.schedule(update,1,rate);
+    }
 
     private void getData(){
         update = new DoInBackgroud();
         mTimer.schedule(update, 1, rate);
     }
 
-//    public Timer getNewTimer(){
-//        return mTimer;
-//    }
+    public Timer getNewTimer(){
+        return mTimer;
+    }
 
     class DoInBackgroud extends TimerTask {
         private float updatef = 1.0f;
@@ -108,21 +110,20 @@ public class Main extends Application {
 
         @Override
         public void run() {
-            processData.clear();
                 String JSONStr;
                 SystemController DATA = new SystemController();
                 JSONStr = DATA.getallprocesses_test();
                 JSONStr = JSONStr.substring(10, JSONStr.length() - 1);
-                JSONStr = JSONStr.replaceAll("\u0001\u0006", "Null");
                 //System.out.println("Test");
-                //System.out.println(JSONStr);
+                System.out.println(JSONStr);
                 JSONArray jsonArray = JSONArray.fromObject(JSONStr);
                 Object[] os = jsonArray.toArray();
                 int num = -1;  //Check how many process in the Computer
+                processData.removeAll(processData);
                 for (int i = 0; i < os.length; i++) {
                     JSONObject jsonObject = JSONObject.fromObject(os[i]);
-                    String checkMemory = jsonObject.get("memory").toString();
-                    if (!checkMemory.equals(" Null ")) {
+                    String checkMemory = jsonObject.get("memory").toString().substring(jsonObject.get("memory").toString().length()-3,jsonObject.get("memory").toString().length()-1);
+                    if (checkMemory.equals("kB")) {
                         processData.add(new Process(jsonObject.get("name").toString(), Integer.parseInt(jsonObject.get("pid").toString()), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
                         num++;
                         System.out.println("Testing--------------------");
@@ -137,6 +138,8 @@ public class Main extends Application {
                     }
 
                 }
+                System.out.println(processData);
+                System.out.println("test");
             }
 
     }

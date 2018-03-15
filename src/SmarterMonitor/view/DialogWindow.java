@@ -1,5 +1,6 @@
 package SmarterMonitor.view;
 
+import SmarterMonitor.controller.SystemController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +26,7 @@ public class DialogWindow extends Pane{
     private Stage dialogStage;
     private String processName;
     private MainWindow mainWindow;
+    private SystemController systemController;
 
     public DialogWindow(){
 
@@ -61,6 +63,8 @@ public class DialogWindow extends Pane{
         int pid;
         pid = mainWindow.getSelectionPID();
         //System.out.println(pid);
+        systemController = new SystemController();
+        systemController.killProcess(pid);
         dialogStage.close();
     }
 
