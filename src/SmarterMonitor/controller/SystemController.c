@@ -3,6 +3,7 @@
 //  comp3000project
 //
 //  Created by CHEN JUNHAO on 2018/3/5.
+//  Copyright © 2018年 CHEN JUNHAO. All rights reserved.
 //
 #include <jni.h>
 #include <stdio.h>
@@ -205,6 +206,7 @@ void readAll(unsigned int waitsec, long waitusec, char* msg){
 
     usleep(waitusec);
     sleep(waitsec);
+    //todo:change to user defined updatef;
     for (i = 0; i< size; i++){
 
         char filepath[MAX_STRING_SIZE];
@@ -259,8 +261,8 @@ int main(int argc, const char * argv[]) {
 JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getallprocesses(JNIEnv * env, jclass cls){
     char* message = malloc(51200);
     readAll(1,0,message);
-    return (*env)->NewStringUTF(env,message);
-
+    jstring opt =  (*env)->NewStringUTF(env,message);
+return opt;
 
 
 }
