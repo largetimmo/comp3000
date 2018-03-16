@@ -144,6 +144,7 @@ public class MainWindow extends Pane {
     }
 
     public void setFilter(SmarterMonitor.Main main){
+        this.main = main;
         FilteredList<Process> filteredData = new FilteredList<>(main.getProcessData(), p->true);
 
         searchField.textProperty().addListener((ovservable, oldValue, newValue) -> {
@@ -175,7 +176,7 @@ public class MainWindow extends Pane {
         if (processTable.getSelectionModel().getSelectedItem() != null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("DialogWindow.fxml"));
+                loader.setLocation(getClass().getResource("/SmarterMonitor/view/DialogWindow.fxml"));
                 AnchorPane dialog = (AnchorPane) loader.load();
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Kll Process");
@@ -186,6 +187,7 @@ public class MainWindow extends Pane {
                 dialogWindow.setDialogStage(dialogStage);
                 dialogWindow.setProcessName(processTable.getSelectionModel().getSelectedItem().getpName());
                 dialogWindow.setMainWindow(this);
+                dialogWindow.setMain(main);
                 dialogStage.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -198,10 +200,29 @@ public class MainWindow extends Pane {
         return processTable.getSelectionModel().getSelectedItem().getpID();
     }
 
+    @FXML
+    public int getSelection(){
+        System.out.println(processTable.getSelectionModel().getFocusedIndex());
+        return processTable.getSelectionModel().getFocusedIndex();
+    }
+
+
+    public Process getSelectionPro(){
+        return processTable.getSelectionModel().getSelectedItem();
+    }
+
+    @FXML
+    public boolean setSelection(int select){
+        if (select != -1){
+            processTable.getSelectionModel().select(select);
+            return true;
+        }
+        return false;
+    }
 
 
 
-//    class DoInBackgroud extends Thread{
+    //    class DoInBackgroud extends Thread{
 //        private float updatef = 1.0f;
 //        ObservableList<Process> processData = FXCollections.observableArrayList();
 //        public void setUpdatef(float f){
