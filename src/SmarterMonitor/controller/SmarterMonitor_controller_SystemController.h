@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (I)I
  */
 JNIEXPORT jint JNICALL Java_SmarterMonitor_controller_SystemController_killProcess
-  (JNIEnv *, jobject, jint);
+  (JNIEnv *, jclass, jint);
 
 /*
  * Class:     SmarterMonitor_controller_SystemController
@@ -21,7 +21,23 @@ JNIEXPORT jint JNICALL Java_SmarterMonitor_controller_SystemController_killProce
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getallprocesses
-  (JNIEnv *, jobject);
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     SmarterMonitor_controller_SystemController
+ * Method:    getallpids
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getallpids
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     SmarterMonitor_controller_SystemController
+ * Method:    getProcInfo
+ * Signature: (I)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getProcInfo
+  (JNIEnv *, jclass, jint);
 
 #ifdef __cplusplus
 }
