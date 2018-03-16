@@ -31,6 +31,22 @@ typedef struct{
     unsigned long total_time;
 } proc;
 
+void parsePidToJson(char** farr, int size,char* msg){
+    strcpy(msg,"{\"size\":\"");
+    char size_s[MAX_STRING_SIZE];
+    sprintf(size_s,"%d",size);
+    strcat(msg,size_s);
+    strcat(msg,"\",\"names\":[");
+    for (int i = 0; i < size ; i++) {
+        if (i!=0){
+            strcat(msg,",");
+        }
+        strcat(msg,farr[i]);
+    }
+    strcat(msg,"]}");
+}
+
+
 //tested
 void parseProcToJson(proc* process, char buffer[]){
     /**
@@ -246,6 +262,40 @@ int killprocess(int pid){
     return kill(pid,SIGKILL);
 }
 
+void getProcessInfo(int pid, char* message,int wait_sec,long wait_usec){
+    long hz = sysconf(_SC_CLK_TCK);
+    int i;
+    proc* prev = malloc(sizeof(proc));
+    proc* now = malloc(sizeof(proc));
+    char pid_s[MAX_STRING_SIZE];
+    sprintf(pid_s,"%d",pid);
+    char path[MAX_STRING_SIZE];
+    strcpy(path,"/proc/");
+    strcat(path,pid_s);
+    readCpuTime(path,prev);
+    strcpy(path,"/proc/");
+    strcat(path,pid_s);
+    sleep(wait_sec);
+    usleep(wait_usec);
+    readCpuTime(path,now);
+    float totaltime = wait_sec + wait_usec/1000000;
+    now->cpu = ((float) now->total_time-prev->total_time)/hz/totaltime*100;
+    strcpy(path,"/proc/");
+    strcat(path,pid_s);
+    readMemoryPidOidGid(path,now);
+    int memory = 0;
+        sscanf(now->memory,"%d %s",&memory);
+        if(memory == 0){
+            strcpy(message,"{}");
+            return;
+        }
+    sprintf(now->memory,"%d %s",memory,"kB");
+    findGroupName(now);
+    findUserName(now);
+    parseProcToJson(now,message);
+
+}
+
 /*
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -258,16 +308,28 @@ int main(int argc, const char * argv[]) {
 */
 
 
-JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getallprocesses(JNIEnv * env, jclass cls){
+JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getallprocesses (JNIEnv *env, jclass cls){
     char* message = malloc(51200);
-    readAll(1,0,message);
-    jstring opt =  (*env)->NewStringUTF(env,message);
-return opt;
-
+       readAll(1,0,message);
+       jstring opt =  (*env)->NewStringUTF(env,message);
+   return opt;
 
 }
 
+JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getProcInfo (JNIEnv *env, jclass cls, jint pid){
+     char* msg = malloc(256);
+     getProcessInfo((int)pid,msg,1,0);
+    return (*env)->NewStringUTF(env,msg);
+}
 
+JNIEXPORT jstring JNICALL Java_SmarterMonitor_controller_SystemController_getallpids (JNIEnv *env, jclass cls){
+        char* message = malloc(2048);
+        char** farr = malloc(sizeof(char*)*500);
+        int farr_size = 0;
+        getAllDir(farr,&farr_size);
+        parsePidToJson(farr,farr_size,message);
+        return(*env)->NewStringUTF(env,message);
+}
 
 JNIEXPORT jint JNICALL Java_SmarterMonitor_controller_SystemController_killProcess (JNIEnv* env, jclass cls, jint pid){
     return killprocess((int) pid);
