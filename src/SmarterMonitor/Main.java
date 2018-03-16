@@ -73,6 +73,19 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    //Get process info example
+    /*
+    class GetProc extends Thread{
+        int pid = -1;
+        public void setPid(int pid){
+            this.pid = pid;
+        }
+        @Override
+        public void run(){
+            String json = SystemController.getProcInfo(pid);
+        }
+    }
+    */
 
     class DoInBackgroud extends Thread {
         private float updatef = 1.0f;
