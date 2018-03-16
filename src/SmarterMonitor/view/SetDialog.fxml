@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SmarterMonitor.view.SetDialog">
+   <children>
+      <TextField fx:id="rateSecond" layoutX="101.0" layoutY="19.0" prefHeight="11.0" prefWidth="91.0" promptText="5" />
+      <Label layoutX="15.0" layoutY="23.0" text="Refresh Rate" />
+      <Button fx:id="setButton" layoutX="130.0" layoutY="80.0" mnemonicParsing="false" onAction="#getRate" prefHeight="27.0" prefWidth="59.0" text="Set" />
+   </children>
+</AnchorPane>

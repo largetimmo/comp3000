@@ -1,5 +1,7 @@
 package SmarterMonitor.view;
 
+import SmarterMonitor.Main;
+import SmarterMonitor.controller.SystemController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +27,8 @@ public class DialogWindow extends Pane{
     private Stage dialogStage;
     private String processName;
     private MainWindow mainWindow;
+    private SystemController systemController;
+    private Main main;
 
     public DialogWindow(){
 
@@ -41,6 +45,10 @@ public class DialogWindow extends Pane{
 
     public void setMainWindow(MainWindow mainWindow){
         this.mainWindow = mainWindow;
+    }
+
+    public void setMain(Main main){
+        this.main = main;
     }
 
 
@@ -60,7 +68,11 @@ public class DialogWindow extends Pane{
         //TODO kill the process
         int pid;
         pid = mainWindow.getSelectionPID();
-        //System.out.println(pid);
+
+        System.out.println(pid);
+        systemController = new SystemController();
+        systemController.killProcess(pid);
+        main.deleteProcessData(mainWindow.getSelectionPro());
         dialogStage.close();
     }
 
