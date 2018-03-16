@@ -38,6 +38,7 @@ void parsePidToJson(char** farr, int size,char* msg){
     strcat(msg,size_s);
     strcat(msg,"\",\"names\":[");
     for (int i = 0; i < size ; i++) {
+
         if (i!=0){
             strcat(msg,",");
         }
@@ -92,10 +93,18 @@ void parseProcToJson(proc* process, char buffer[]){
 void parseToJson(proc* procarr[], int procsize, char jsonstr[]){
     strcpy(jsonstr, "{\"result\":[");
     char* buffer = malloc(102400);
+    int memory = 0;
     for (int i = 0;i<procsize;i++){
+        memory = 0;
+        char unit[MAX_STRING_SIZE];
+        sscanf(procarr[i]->memory,"%d %s",&memory,unit);
+        if(memory == 0){
+            continue;
+        }
         if(i!=0){
             strcat(jsonstr, ",");
         }
+        sprintf(procarr[i]->memory,"%d %s",memory,unit);
         parseProcToJson(procarr[i], buffer);
         strcat(jsonstr, buffer);
     }
