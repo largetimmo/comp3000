@@ -12,6 +12,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
+                  <MenuItem mnemonicParsing="false" text="Login" />
               <MenuItem fx:id="setMenu" mnemonicParsing="false" onAction="#setSetting" text="Setting" />
             </items>
           </Menu>

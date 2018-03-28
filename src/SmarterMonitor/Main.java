@@ -1,20 +1,24 @@
 package SmarterMonitor;
 
 import SmarterMonitor.controller.SystemController;
+import SmarterMonitor.view.DialogWindow;
 import SmarterMonitor.view.RootLayout;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import SmarterMonitor.view.MainWindow;
 import SmarterMonitor.view.Process;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -114,8 +118,9 @@ public class Main extends Application {
 
         @Override
         public void run() {
-                String JSONStr;
+            String JSONStr;
             int selectedPid=0;
+            ArrayList<Process> checkedProcess = new ArrayList<Process>();
             if (processData.size() != 0){
                 selectedPid = mainWindow.getSelectionPID();
             }
@@ -123,18 +128,35 @@ public class Main extends Application {
                 JSONStr = DATA.getallprocesses_test();  //In Linux, this function should be DATA.getallprocesses() TODO
                 JSONStr = JSONStr.substring(10, JSONStr.length() - 1);
                 //Testing Code
-                //System.out.println("Test");
+                System.out.println("Test");
                 //System.out.println(JSONStr);
                 JSONArray jsonArray = JSONArray.fromObject(JSONStr);
                 Object[] os = jsonArray.toArray();
                 int num = -1;  //Check how many process in the Computer
+            for (int i = 0; i< processData.size(); i++){
+                if (processData.get(i).getNeedKill() == 2){
+                    checkedProcess.add(processData.get(i));
+                }
+            }
                 processData.removeAll(processData);
                 for (int i = 0; i < os.length; i++) {
                     JSONObject jsonObject = JSONObject.fromObject(os[i]);
                     String checkMemory = jsonObject.get("memory").toString().substring(jsonObject.get("memory").toString().length()-3,jsonObject.get("memory").toString().length()-1);
-                    if (checkMemory.equals("kB")) {
-                        processData.add(new Process(jsonObject.get("name").toString(), Integer.parseInt(jsonObject.get("pid").toString()), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
-                        num++;
+                    boolean isAdd = false;
+                    if (checkMemory.equals("kB") && isAdd == false) {
+                        for (int j=0; j<checkedProcess.size(); j++) {
+                            if (Integer.parseInt(jsonObject.get("pid").toString()) == checkedProcess.get(j).getpID() && Float.parseFloat(jsonObject.get("cpu").toString()) >= 150) {
+                                processData.add(new Process(jsonObject.get("name").toString(), Integer.parseInt(jsonObject.get("pid").toString()), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString()), 2));
+                                num++;
+                                isAdd = true;
+                                break;
+                            }
+                        }
+                        if (isAdd == false) {
+                            processData.add(new Process(jsonObject.get("name").toString(), Integer.parseInt(jsonObject.get("pid").toString()), jsonObject.get("owner").toString() + "/" + jsonObject.get("ownergrp").toString(), jsonObject.get("memory").toString(), Float.parseFloat(jsonObject.get("cpu").toString())));
+                            num++;
+                            isAdd = true;
+                        }
                             //Testing Code
 //                        System.out.println("Testing--------------------");
 //                        System.out.println("Name: " + jsonObject.get("name"));
@@ -143,11 +165,19 @@ public class Main extends Application {
 //                        System.out.println("Memory: " + jsonObject.get("memory"));
 //                        System.out.println("cpu: " + jsonObject.get("cpu"));
 //                        System.out.println("ObList: " + processData.get(num).getpName());
+
                     } else {
                         continue;
                     }
                 }
                 mainWindow.setSelection(selectedPid);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    mainWindow.checkProcess();
+                }
+            });
+
                 //Testing Code
                 //System.out.println(processData);
                 //System.out.println("test");
@@ -162,6 +192,14 @@ public class Main extends Application {
         for (int i=0;i<processData.size();i++){
             if (processData.get(i).getpID() == pid){
                 processData.remove(processData.get(i));
+            }
+        }
+    }
+
+    public void setNeedKill(int pid){
+        for (int i=0; i<processData.size();i++){
+            if (processData.get(i).getpID() == pid){
+                processData.get(i).setNeedKill(2);
             }
         }
     }

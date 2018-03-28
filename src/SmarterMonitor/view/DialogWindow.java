@@ -64,6 +64,10 @@ public class DialogWindow extends Pane{
     @FXML
     private void keepProcess(){
         //dialogStage.setTitle("Test");
+        if (process.getNeedKill() == 1){
+            main.setNeedKill(pid);
+        }
+        mainWindow.setExistDialog(false);
         dialogStage.close();
     }
 
@@ -77,6 +81,7 @@ public class DialogWindow extends Pane{
         //systemController.killProcess(pid);   //In Linux, this line shouldn't comment.  TODO
         //main.deleteProcessData(mainWindow.getSelectionPro());
         main.deleteProcessData(pid);
+        mainWindow.setExistDialog(false);
         dialogStage.close();
     }
 
