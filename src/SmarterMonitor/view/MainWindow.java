@@ -99,14 +99,14 @@ public class MainWindow extends Pane {
     private void killCheckedProcess(Process process){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/SmarterMonitor/view/DialogWindow.fxml"));
+            loader.setLocation(getClass().getResource("/SmarterMonitor/view/AutoCheckDialogWindow.fxml"));
             AnchorPane dialog = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Kll Process");
+            dialogStage.setTitle("Auto Check Process");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             Scene scene = new Scene(dialog);
             dialogStage.setScene(scene);
-            DialogWindow dialogWindow = loader.getController();
+            AutoCheckDialogWindow dialogWindow = loader.getController();
             dialogWindow.setDialogStage(dialogStage);
             dialogWindow.setProcessName(process.getpName());
             dialogWindow.setMainWindow(this);
