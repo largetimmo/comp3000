@@ -4,13 +4,10 @@ import SmarterMonitor.Main;
 import SmarterMonitor.controller.SystemController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+public class AutoCheckDialogWindow {
 
-import java.io.IOException;
-
-public class DialogWindow extends Pane{
 
     @FXML
     private javafx.scene.text.Text textAlret;
@@ -27,7 +24,7 @@ public class DialogWindow extends Pane{
     private int pid;
     private Process process;
 
-    public DialogWindow(){
+    public AutoCheckDialogWindow(){
 
     }
 
@@ -37,7 +34,7 @@ public class DialogWindow extends Pane{
 
     public void setProcessName (String processName){
         this.processName = processName;
-        textAlret.setText(processName + " need be killed");
+        textAlret.setText("The CPU usage of " + processName + " is more than 150. Do you want to kill it?");
     }
 
     public void setMainWindow(MainWindow mainWindow){
@@ -84,5 +81,4 @@ public class DialogWindow extends Pane{
         mainWindow.setExistDialog(false);
         dialogStage.close();
     }
-
 }

@@ -8,6 +8,7 @@ public class Process {
     private final StringProperty onwer;
     private final StringProperty memory;
     private final FloatProperty cpu;
+    private int needKill;
 
     public Process(String name, int pID, String ownerInfo, String memory, float cpu){
         this.name = new SimpleStringProperty(name);
@@ -15,6 +16,21 @@ public class Process {
         this.onwer = new SimpleStringProperty(ownerInfo);
         this.memory = new SimpleStringProperty(memory);
         this.cpu = new SimpleFloatProperty(cpu);
+        if (cpu > 150){
+            this.needKill=1;
+        }
+        else {
+            this.needKill = 0;
+        }
+    }
+
+    public Process(String name, int pID, String ownerInfo, String memory, float cpu, int needKill){
+        this.name = new SimpleStringProperty(name);
+        this.pid = new SimpleIntegerProperty(pID);
+        this.onwer = new SimpleStringProperty(ownerInfo);
+        this.memory = new SimpleStringProperty(memory);
+        this.cpu = new SimpleFloatProperty(cpu);
+        this.needKill = needKill;
     }
 
     public void setpName(String pName){
@@ -46,6 +62,12 @@ public class Process {
     }
     public float getCpu(){
         return cpu.get();
+    }
+    public int getNeedKill(){
+        return needKill;
+    }
+    public void setNeedKill(int needKill){
+        this.needKill = needKill;
     }
 
     public IntegerProperty pidProperty() {

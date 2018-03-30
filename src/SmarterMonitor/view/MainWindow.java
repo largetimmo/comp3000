@@ -5,14 +5,11 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import SmarterMonitor.Main;
@@ -24,6 +21,7 @@ import java.io.IOException;
 
 public class MainWindow extends Pane {
     private Main main;
+    private boolean existDialog = false;
 
     @FXML
     private Button killButton;
@@ -80,6 +78,49 @@ public class MainWindow extends Pane {
         processTable.setItems(sortedData);
     }
 
+    public void checkProcess(){
+        if (existDialog == true){
+            return;
+        }
+        else {
+            int tableSize = processTable.getItems().size();
+            for (int i = 0; i < processTable.getItems().size(); i++) {
+                if (processTable.getItems().size() < tableSize) {
+                    i--;
+                    tableSize = processTable.getItems().size();
+                }
+                if (processTable.getItems().get(i).getNeedKill() == 1) {
+                    killCheckedProcess(processTable.getItems().get(i));
+                }
+            }
+        }
+    }
+
+    private void killCheckedProcess(Process process){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/SmarterMonitor/view/AutoCheckDialogWindow.fxml"));
+            AnchorPane dialog = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Auto Check Process");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(dialog);
+            dialogStage.setScene(scene);
+            AutoCheckDialogWindow dialogWindow = loader.getController();
+            dialogWindow.setDialogStage(dialogStage);
+            dialogWindow.setProcessName(process.getpName());
+            dialogWindow.setMainWindow(this);
+            dialogWindow.setMain(main);
+            dialogWindow.setPid(process.getpID());
+            dialogWindow.setProcess(process);
+            existDialog = true;
+            dialogStage.showAndWait();
+            //return dialogStage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     @FXML
@@ -106,7 +147,6 @@ public class MainWindow extends Pane {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -133,5 +173,9 @@ public class MainWindow extends Pane {
             }
         }
         return false;
+    }
+
+    public void setExistDialog(boolean existDialog){
+        this.existDialog = existDialog;
     }
 }
