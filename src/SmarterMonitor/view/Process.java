@@ -16,7 +16,7 @@ public class Process {
         this.onwer = new SimpleStringProperty(ownerInfo);
         this.memory = new SimpleStringProperty(memory);
         this.cpu = new SimpleFloatProperty(cpu);
-        if (cpu > 150){
+        if (cpu > 80){
             this.needKill=1;
         }
         else {

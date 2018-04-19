@@ -34,7 +34,7 @@ public class AutoCheckDialogWindow {
 
     public void setProcessName (String processName){
         this.processName = processName;
-        textAlret.setText("The CPU usage of " + processName + " is more than 150. Do you want to kill it?");
+        textAlret.setText("The CPU usage of " + processName + " is more than 80. Do you want to kill it?");
     }
 
     public void setMainWindow(MainWindow mainWindow){
